@@ -123,7 +123,15 @@ class TestBookingScheduler(unittest.TestCase):
             self.fail()
 
     def test_현재날짜가_일요일이_아닌경우_예약가능(self):
-        pass
+        # arrange
+        self.booking_scheduler = MondayBookingScheduler(CAPACITY_PER_HOUR)
+
+        # act
+        new_schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER_WITH_MAIL)
+        self.booking_scheduler.add_schedule(new_schedule)
+
+        # assert
+        self.assertTrue(self.booking_scheduler.has_schedule(new_schedule))
 
 
 if __name__ == '__main__':
