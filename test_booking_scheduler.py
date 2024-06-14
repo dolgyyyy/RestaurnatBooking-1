@@ -8,11 +8,14 @@ NOT_ON_THE_HOUR = datetime.strptime("2021/03/26 09:05", "%Y/%m/%d %H:%M")
 CUSTOMER = Customer("Fake name", "010-1234-5678")
 ON_THE_HOUR = datetime.strptime("2021/03/26 09:00", "%Y/%m/%d %H:%M")
 
+UNDER_CAPACITY = 1
+CAPACITY_PER_HOUR = 3
+
 class TestBookingScheduler(unittest.TestCase):
     def test_예약은_정시에만_가능하다_정시가_아닌경우_예약불가(self):
         # arrange
-        schedule = Schedule(NOT_ON_THE_HOUR, 1, CUSTOMER)
-        booking_scheduler = BookingScheduler(3)
+        schedule = Schedule(NOT_ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
+        booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
 
         # act and assert
         with self.assertRaises(ValueError):
@@ -22,8 +25,8 @@ class TestBookingScheduler(unittest.TestCase):
     def test_예약은_정시에만_가능하다_정시인_경우_예약가능(self):
         # arrange
         customer = Customer("Fake name", "010-1234-5678")
-        schedule = Schedule(ON_THE_HOUR, 1, customer)
-        booking_scheduler = BookingScheduler(3)
+        schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, customer)
+        booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
 
         # act
         booking_scheduler.add_schedule(schedule)
