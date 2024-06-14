@@ -16,6 +16,8 @@ class TestBookingScheduler(unittest.TestCase):
 
     def setUp(self):
         self.booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR)
+        self.testable_sms_sender = TestableSmsSender()
+        self.booking_scheduler.set_sms_sender(self.testable_sms_sender)
 
     def test_예약은_정시에만_가능하다_정시가_아닌경우_예약불가(self):
         # arrange
@@ -66,8 +68,6 @@ class TestBookingScheduler(unittest.TestCase):
     def test_예약완료시_SMS는_무조건_발송(self):
         # arrange
         schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
-        self.testable_sms_sender = TestableSmsSender()
-        self.booking_scheduler.set_sms_sender(self.testable_sms_sender)
 
         # act
         self.booking_scheduler.add_schedule(schedule)
