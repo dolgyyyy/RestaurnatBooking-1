@@ -1,5 +1,6 @@
 import unittest
 from datetime import datetime, timedelta
+from overrides import override
 
 from booking_scheduler import BookingScheduler
 from communication_test import TestableSmsSender, TestableMailSender
@@ -13,25 +14,14 @@ CUSTOMER_WITH_MAIL = Customer("Fake Name", "010-1234-5678", "test@test.com")
 UNDER_CAPACITY = 1
 CAPACITY_PER_HOUR = 3
 
-class TestableBookingScheduler(BookingScheduler):
-    def __init__(self, capacity_per_hour, date_time: str):
-        super().__init__(capacity_per_hour)
-        self._date_time = date_time
-
-    def get_now(self):
-        return datetime.strptime(self._date_timem, "%Y/%m/%d %H:%M")
 
 class SundayBookingScheduler(BookingScheduler):
-    def __init__(self, capacity_per_hour):
-        super().__init__(capacity_per_hour)
-
+    @override
     def get_now(self):
         return datetime.strptime("2021/03/28 17:00", "%Y/%m/%d %H:%M")
 
 class MondayBookingScheduler(BookingScheduler):
-    def __init__(self, capacity_per_hour):
-        super().__init__(capacity_per_hour)
-
+    @override
     def get_now(self):
         return datetime.strptime("2024/06/03 17:00", "%Y/%m/%d %H:%M")
 
