@@ -12,6 +12,10 @@ UNDER_CAPACITY = 1
 CAPACITY_PER_HOUR = 3
 
 class TestBookingScheduler(unittest.TestCase):
+
+    def setUp(self):
+        super().setUp()
+
     def test_예약은_정시에만_가능하다_정시가_아닌경우_예약불가(self):
         # arrange
         schedule = Schedule(NOT_ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
@@ -20,7 +24,6 @@ class TestBookingScheduler(unittest.TestCase):
         # act and assert
         with self.assertRaises(ValueError):
             booking_scheduler.add_schedule(schedule)
-
 
     def test_예약은_정시에만_가능하다_정시인_경우_예약가능(self):
         # arrange
