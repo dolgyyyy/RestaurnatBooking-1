@@ -118,9 +118,10 @@ class TestBookingScheduler(unittest.TestCase):
             self.booking_scheduler.add_schedule(new_schedule)
             self.fail()
 
-    def test_현재날짜가_일요일이_아닌경우_예약가능(self):
+    @patch.object(BookingScheduler, 'get_now', return_value=datetime.strptime("2026/06/03 17:00", "%Y/%m/%d %H:%M"))
+    def test_현재날짜가_일요일이_아닌경우_예약가능(self, mock):
         # arrange
-        self.booking_scheduler = TestableBookingScheduler(CAPACITY_PER_HOUR, "2024/06/03 17:00")
+        self.booking_scheduler = BookingScheduler(CAPACITY_PER_HOUR) # 일요일이 아닌 경우
 
         # act
         new_schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER_WITH_MAIL)
