@@ -77,15 +77,15 @@ class TestBookingScheduler(unittest.TestCase):
 
     def test_이메일이_없는_경우에는_이메일_미발송(self):
         # arrange
-        testable_mail_sender = TestableMailSender()
         schedule = Schedule(ON_THE_HOUR, UNDER_CAPACITY, CUSTOMER)
-        self.booking_scheduler.set_mail_sender(testable_mail_sender)
+        self.testable_mail_sender = TestableMailSender()
+        self.booking_scheduler.set_mail_sender(self.testable_mail_sender)
 
         # act
         self.booking_scheduler.add_schedule(schedule)
 
         # assert
-        self.assertEqual(testable_mail_sender.get_count_send_mail_is_called(), 0)
+        self.assertEqual(self.testable_mail_sender.get_count_send_mail_is_called(), 0)
 
     def test_이메일이_있는_경우에는_이메일_발송(self):
         # arrange
