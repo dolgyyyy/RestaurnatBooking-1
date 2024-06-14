@@ -1,6 +1,7 @@
 import unittest
 from datetime import datetime, timedelta
 from overrides import override
+from unittest.mock import Mock, patch
 
 from booking_scheduler import BookingScheduler
 from communication_test import TestableSmsSender, TestableMailSender
